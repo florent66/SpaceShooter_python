@@ -62,7 +62,7 @@ class Missile:
         self.fireMove = 'False'
         self.vitesseMax=0
         self.moteur.canvas.coords(self.objMissile,self.x, self.y)
-        dicoSon['explosion'].play()
+        # dicoSon['explosion'].play()
         for u in range(0,self.nbExplosion):
             self.explosions[u].fire(self.position[0],self.position[1])  
 

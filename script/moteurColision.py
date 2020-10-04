@@ -9,8 +9,7 @@ pygame.init()
 # print('colision')
 dicoSon = {
     'tir' : pygame.mixer.Sound('assets/sons/tir.wav'),
-    'explosion' : pygame.mixer.Sound('assets/sons/explosion.wav'),
-    'zik' : pygame.mixer.Sound('assets/sons/zik.wav'),
+    'explosion' : pygame.mixer.Sound('assets/sons/explosion.wav')
 }
 
 colisionMissile = {}

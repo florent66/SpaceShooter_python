@@ -6,12 +6,13 @@ from .explosion import Explosion
 from .moteurColision import AjoutcolisionPanda
 from .moteurColision import dicoSon
 import time
+# from tkMessageBox import *
+# from Tkinter import * 
 ##test premier commit
 
 class Panda:
     def __init__(self,moteur,x,y):
         self.moteur = moteur
-
         self.cage = [30,30]
         self.x = x
         self.y = y
@@ -21,7 +22,7 @@ class Panda:
         #self.moteur.canvas.create_rectangle(self.x, self.y, self.x+self.cage[0], self.y+self.cage[1],fill='red')
         self.imgPanda = self.imgPanda.resize((self.cage[0],self.cage[1]))
         self.tkimage = ImageTk.PhotoImage(self.imgPanda) 
-        self.objPanda = moteur.canvas.create_image(0,0,anchor='nw', image=self.tkimage)
+        self.objPanda = self.moteur.canvas.create_image(0,0,anchor='nw', image=self.tkimage)
         self.moteur.canvas.coords(self.objPanda,self.x, self.y)
         
         self.moteur.canvas.pack()
@@ -39,7 +40,8 @@ class Panda:
 
     def miseAfire(self):
         # self.moteur.canvas.coords(self.objPanda,-200, 0)
-        dicoSon['explosion'].play()
+        # dicoSon['explosion'].play()
+        self.moteur.canvas.pack()
         for u in range(0,self.nbExplosion):
             self.explosions[u].fire(self.position[0],self.position[1]) 
 

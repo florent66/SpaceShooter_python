@@ -2,9 +2,11 @@
 
 import sys
 from Tkinter import * 
+from tkMessageBox import *
 from PIL import ImageTk 
 from PIL import Image 
 from PIL import ImageFilter
+from .decor import Decor
 from .objVaisseau import Vaisseau
 from .panda import Panda
 import random
@@ -12,54 +14,19 @@ import time
 from .moteurColision import set_Pause,get_Pause,dicoSon
 
 
-
-
-# for line in sys.stdin:
-#     print('dddd'+line)
-#     fichier = open("data.txt", "a")
-#     fichier.write(line)
-#     fichier.close()
-# print('oki')
-# premiereChaine = input("Veuillez saisir un nombre : ")
-# secondeChaine = input("Veuillez saisir un autre nombre : ")
-
-# a = float(premiereChaine)
-# b = float(secondeChaine)
-
-# print("a + b = ", a + b)
-# print("a - b = ", a - b)
-# print("a * b = ", a * b)
-# print("a / b = ", a / b)
-
-
-# from playsound import playsound
-
-# playsound('zik.mp3')
-# wave.open("./zik.mp3","r") 
-# playsound.playsound('zik.mp3', True)
-# import http.server
- 
-# PORT = 8080
-# server_address = ("", PORT)
-
-# server = http.server.HTTPServer
-# handler = http.server.CGIHTTPRequestHandler
-# handler.cgi_directories = ["/"]
-# print("Serveur actif sur le port :", PORT)
-
-# httpd = server(server_address, handler)
-# httpd.serve_forever()
-##creation class vaisseau
-
-
 class Moteur:
     def __init__(self):
         self.fenetre = Tk()
+        self.fenetre.title('Rafale 2')
+        self.fenetre.rowconfigure(0, weight=1)
+        self.fenetre.columnconfigure(0, weight=1)
+
         self.canvas = Canvas(self.fenetre, width=800, height=600, background='black')
         self.ImageTk = ImageTk
-        self.canvas.pack()
         self.canvas.focus_set()
         self.pause = self.canvas.create_text(-200, 200,text='PAUSE',fill='white',width='200')
+
+        self.decor = Decor(self)
         self.vaisseau = Vaisseau(self,200)
         self.panda = Panda(self,200,300)
         self.panda2 = Panda(self,500,300)
@@ -71,7 +38,33 @@ class Moteur:
         # self.vaisseau3 = Vaisseau(self,300)
         self.canvas.bind("<Key>", self.clavierPress)
         self.canvas.bind("<KeyRelease>", self.clavierRelache)
+
         # dicoSon['zik'].play()
+        ###########################################################
+        # logo = PhotoImage(file='assets/images/panda.png')
+        # menubar = Menu(self.fenetre,bg='red')
+        # menu1 = Menu(menubar, tearoff=0)
+        # menu1.add_command(image=logo,command=self.alert,label="Creer")
+        # menu1.add_command(label="Editer", command=self.alert)
+        # menu1.add_separator()
+        # menu1.add_command(label="Quitter", command=self.fenetre.quit)
+        # menubar.add_cascade(label="Fichier", menu=menu1)
+
+        # menu2 = Menu(menubar, tearoff=0)
+        # menu2.add_command(label="Couper", command=self.alert)
+        # menu2.add_command(label="Copier", command=self.alert)
+        # menu2.add_command(label="Coller", command=self.alert)
+        # menubar.add_cascade(label="Editer", menu=menu2)
+
+        # menu3 = Menu(menubar, tearoff=0)
+        # menu3.add_command(label="A propos", command=self.alert)
+        # menubar.add_cascade(label="Aide", menu=menu3)
+
+        # self.fenetre.config(menu=menubar)
+
+        # self.fenetre.config(menu=menubar)
+        # showinfo("alerte", "Bravo!")
+        ###########################################################
         self.fenetre.mainloop()
 
     def clavierPress(self,event):
@@ -93,66 +86,9 @@ class Moteur:
         # self.vaisseau2.clavierRelache(event)
         # self.vaisseau3.clavierRelache(event)
 
-########"A GARDER##############"
+    def alert(self):
+        print('alert')
 
-# def start():
-#     global x
-#     canvas.move(image,x,.1)
-#     fenetre.after(1,start)
-
-# def bouge(mouvement):
-#         global x
-#         x = mouvement
-
-
-# def clavier(event):
-#     touche = event.keysym
-    
-#     print(touche)
-#     if touche == 's':
-#         start()
-
-#     ## vaisseau x-1
-#     if touche == 'w':
-#         bouge(-1)
-#         ajoutobj(canvas)
-
-#     ## vaisseau x+1
-#     if touche == 'n':
-#         bouge(1)
-# #######################################################################
-# fenetre = Tk()
-# canvas = Canvas(fenetre, width=800, height=600, background='yellow')
-
-# ##les label
-# label = Label(fenetre, text="Hello World")
-# label.pack()
-# bouton=Button(fenetre, text="Fermer", command=fenetre.quit)
-# bouton.pack()
-
-# ligne1 = canvas.create_line(75, 0, 75, 120)
-# ligne2 = canvas.create_line(0, 60, 150, 60)
-# txt = canvas.create_text(75, 60, text="Cible", font="Arial 16 italic", fill="blue")
-
-# ##Creation background
-# photo = PhotoImage(file="space.png")
-# image = canvas.create_image(0,-200,anchor=NW, image=photo)
-# canvas.focus_set()
-# canvas.bind("<Key>", clavier)
-# canvas.pack()
-
-# ##creation vaisseau
-
-
-# objVaisseau = []
-# for i in range(0,10):
-#   objVaisseau.append(Vaisseau())
-
-
-# fenetre.mainloop()
-######################################################################
-
-            
 
 
 

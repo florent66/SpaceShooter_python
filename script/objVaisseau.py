@@ -6,7 +6,7 @@ from .moteurColision import dicoSon
 import random
 import time
 
-class Vaisseau:
+class Vaisseau():
     def __init__(self,moteur,x):
         
         self.moteur = moteur
