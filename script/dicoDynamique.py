@@ -1,26 +1,19 @@
-import pygame
-from threading import Timer
-# pygame.mixer.pre_init(frequency=44100)
-# pygame.mixer.pre_init(44100,-16,2,2048)
-pygame.mixer.init(22050, -16, 2, 64)
-pygame.init()
-# pygame.mixer.init(frequency=44100)
+## Fichier Tout faire une sorte glabal contenant les imformations a l 'instant "t" du jeu
 
-# print('colision')
-dicoSon = {
-    'tir' : pygame.mixer.Sound('assets/sons/tir.wav'),
-    'explosion' : pygame.mixer.Sound('assets/sons/explosion.wav')
-}
+##Les Globals ici#######
 
+##Dictionnaire des positions des objets
 colisionMissile = {}
 colisionPanda = {}
 colisionVaisseau = {}
 
-pause = 'false'
+##Etat pause ou non
+pause = False 
 
-
+####################################################################################
+##Fonction qui analyse les collision entre les objets Missile/Panda
+##Si collision on appel la methode miseAfire() des objects
 def moteurMissilePanda():
-    # print('colision')
     global colisionMissile
     global colisionPanda
 
@@ -33,13 +26,6 @@ def moteurMissilePanda():
                 if objMissileVal[1] < objPandaVal[1] + objPandaVal[3]+10 and objMissileVal[1]+objMissileVal[3] > objPandaVal[1]:
                     objMissile.miseAfire()
                     objPanda.miseAfire()
-            # else:
-            #     print('------')
-
-#     t = Timer(0.001, moteurMissilePanda)
-#     t.start()
-
-# moteurMissilePanda()
 
 
 def AjoutcolisionPanda(obj,position,cage):
@@ -49,20 +35,15 @@ def AjoutcolisionPanda(obj,position,cage):
 def AjoutcolisionMissile(obj,position,cage):
     global colisionMissile
     colisionMissile[obj] = position + cage
-    moteurMissilePanda()
+    ##Le moteur de colision est appele ici
+    moteurMissilePanda()  
 
 def AjoutcolisionVaisseau(obj,position):
     global colisionVaisseau
     colisionVaisseau[obj] = position
+####################################################################################
 
-
-
-
-########################################################
-def Pause():
-    global pause
-    pause = 'true'
-
+## Getter Setter de l 'etat PAUSE
 def get_Pause():
     global pause
     return pause

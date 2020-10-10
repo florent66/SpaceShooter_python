@@ -3,13 +3,11 @@ from PIL import Image
 from PIL import ImageFilter
 import random
 from .explosion import Explosion
-from .moteurColision import AjoutcolisionMissile
-from .moteurColision import dicoSon
-from .moteurColision import get_Pause
-
+from .dicoDynamique import *
+from .dico import *
 import time
 
-nbExplosion = 5
+
 
 class Missile:
     def __init__(self,vaisseau,moteur):
@@ -21,8 +19,8 @@ class Missile:
         self.y = 550
         self.x_speed = 0
         self.y_speed = 0
-        self.fireMove = 'False'
-        self.fireOut = 'False'
+        self.fireMove = False
+        self.fireOut = False
         self.vitesseMax = 0
         
 
@@ -35,7 +33,7 @@ class Missile:
         self.moteur.canvas.pack()
         self.position = []
         self.explosions = []
-        self.nbExplosion = nbExplosion
+        self.nbExplosion = D_CONF_MISSILE['nbEplosion']
 
         for i in range(0,self.nbExplosion):
             self.explosions.append(Explosion(self,self.moteur,"assets/images/explosion.png"))
@@ -43,31 +41,28 @@ class Missile:
         self.physique()
 
     def fire(self,x,y) :
-        self.fireMove = 'True'
+        self.fireMove = True
         self.moteur.canvas.coords(self.objMissile,x,y)
         self.vitesseMax=20
 
     def fireColision(self):
         AjoutcolisionMissile(self,self.position,self.cage)
         if self.position[1] < 0:
-            self.fireMove = 'False'
+            self.fireMove = False
             self.vitesseMax=0
-            self.moteur.canvas.coords(self.objMissile,self.x, self.y)
-
-        # if self.position[1] < 50:
-        #     self.miseAfire()
-        #     self.moteur.canvas.coords(self.objMissile,self.x, self.y)
+            self.moteur.canvas.coords(self.objMissile,self.x, self.y)        
 
     def miseAfire(self):
-        self.fireMove = 'False'
+        self.fireMove = False
         self.vitesseMax=0
         self.moteur.canvas.coords(self.objMissile,self.x, self.y)
         # dicoSon['explosion'].play()
+        # self.moteur.canvas.delete("all") 
         for u in range(0,self.nbExplosion):
             self.explosions[u].fire(self.position[0],self.position[1])  
 
     def physique(self):
-        if get_Pause() == 'false':
+        if get_Pause() == False:
             self.position = self.moteur.canvas.coords(self.objMissile)
             self.fireColision()
             self.moteur.canvas.move(self.objMissile,0,-self.vitesseMax)

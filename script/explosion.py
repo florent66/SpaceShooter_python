@@ -1,7 +1,7 @@
 from PIL import ImageTk 
 from PIL import Image 
 from PIL import ImageFilter
-from .moteurColision import get_Pause
+from .dicoDynamique import *
 import random
 import time
 
@@ -35,7 +35,7 @@ class Explosion:
     #         self.y_speed = 0
 
     def physique(self):
-        if get_Pause() == 'false':
+        if get_Pause() == False:
             self.position = self.moteur.canvas.coords(self.objExplosion)
             # self.fireColision()
             self.moteur.canvas.move(self.objExplosion,self.x_speed,self.y_speed )

@@ -3,7 +3,8 @@ from PIL import Image
 from PIL import ImageFilter
 import random
 from .explosion import Explosion
-from .moteurColision import dicoSon
+from .dico import *
+from .dicoDynamique import *
 import time
 ##test premier commit
 
@@ -16,7 +17,7 @@ class Decor:
         self.y = -800
         self.x_speed = 0
         self.y_speed = 0
-        self.imgDecor = Image.open("assets/images/decor.jpg") 
+        self.imgDecor = D_IMAGE['background']
         #self.moteur.canvas.create_rectangle(self.x, self.y, self.x+self.cage[0], self.y+self.cage[1],fill='red')
         self.imgDecor = self.imgDecor.resize((self.cage[0],self.cage[1]))
         self.tkimage = ImageTk.PhotoImage(self.imgDecor) 
@@ -29,6 +30,7 @@ class Decor:
 
 
     def physique(self):
-        self.position = self.moteur.canvas.coords(self.objDecor)
-        self.moteur.canvas.move(self.objDecor,0,0.2)
+        if get_Pause() == False:
+            self.position = self.moteur.canvas.coords(self.objDecor)
+            self.moteur.canvas.move(self.objDecor,0,0.2)
         self.moteur.fenetre.after(20,self.physique)
