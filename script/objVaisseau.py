@@ -10,8 +10,9 @@ from .dicoDynamique import *
 
 class Vaisseau():
     def __init__(self,moteur,x):
-        
         self.moteur = moteur
+
+        ##Initialisation des variables
         self.cage = [45,45]
         self.x = x
         self.y = 500
@@ -24,13 +25,6 @@ class Vaisseau():
         self.touche_G = 'RELACHE'
         self.touche_D = 'RELACHE'
         self.touche_SPACE = 'RELACHE'
-        self.imgVaisseau = D_IMAGE['vaisseau'] 
-        self.imgVaisseau = self.imgVaisseau.rotate(180)
-        self.imgVaisseau = self.imgVaisseau.resize((self.cage[0],self.cage[1]))
-        self.tkimage = ImageTk.PhotoImage(self.imgVaisseau) 
-        self.objVaisseau = moteur.canvas.create_image(0,0,anchor='nw', image=self.tkimage)
-        self.moteur.canvas.coords(self.objVaisseau,self.x, self.y)
-        self.moteur.canvas.pack()
         self.position = [0,0]
         self.missiles = []
         self.posChargeur = 0
@@ -39,7 +33,11 @@ class Vaisseau():
         self.time = 0
         self.timeFire = 0
         self.angle = 0
+
+
+
         #############TODO###########################################
+        ##Creation la flamme (sprite)
         self.spriteFlamme = []
         #self.moteur.canvas.create_rectangle(self.x, self.y, self.x+self.cage[0], self.y+self.cage[1],fill='red')
         for i in range(1,4):
@@ -48,12 +46,42 @@ class Vaisseau():
             self.tkimageFlamme = ImageTk.PhotoImage(self.imgFlamme)
             self.spriteFlamme.append(self.tkimageFlamme)
 
-        self.flammeAnimation = Animation(self,self.spriteFlamme,10)
+        self.flammeAnimation = Animation(self,self.spriteFlamme,10,[0,0])
         
         #########################################################
+        # ##Creation mode1
+        # self.imgMode1 = D_IMAGE['mode1'] 
+        # self.imgimgMode1 = self.imgMode1.resize((self.cage[0]*3,self.cage[1]*3))
+        # self.tkimage2 = ImageTk.PhotoImage(self.imgimgMode1) 
+        # self.objimgMode1 = moteur.canvas.create_image(0,0,anchor='nw', image=self.tkimage2)
+        # self.moteur.canvas.coords(self.objimgMode1,self.x, self.y)
+
+        #############TODO###########################################
+        ##Creation mode1 (sprite)
+        self.spriteMode1 = []
+        for i in range(0,360):
+            self.imgmode1Origine = D_IMAGE['mode1']
+            self.imgmode1 = self.imgmode1Origine.resize((self.cage[0]*3,self.cage[1]*3))
+            self.imgmode1 = self.imgmode1.rotate(i)
+            self.tkimage = ImageTk.PhotoImage(self.imgmode1)
+            self.spriteMode1.append(self.tkimage)
+
+        self.mode1Animation = Animation(self,self.spriteMode1,10,[0,0])
+        
+        #########################################################
+        ##Creation vaisseau
+        self.imgVaisseau = D_IMAGE['vaisseau'] 
+        self.imgVaisseau = self.imgVaisseau.rotate(180)
+        self.imgVaisseau = self.imgVaisseau.resize((self.cage[0],self.cage[1]))
+        self.tkimage = ImageTk.PhotoImage(self.imgVaisseau) 
+        self.objVaisseau = moteur.canvas.create_image(0,0,anchor='nw', image=self.tkimage)
+        self.moteur.canvas.coords(self.objVaisseau,self.x, self.y)
+
+
+
         for i in range(0,D_CONF_VAISSEAU['nbMissile']):
             self.missiles.append(Missile(self,self.moteur))
-
+        self.moteur.canvas.pack()
         self.main()
 
 
@@ -108,10 +136,14 @@ class Vaisseau():
 
         ##On ajoute prend compte l 'acceleration et la traine meme dans l'espace
         if self.touche_G == 'PUSH':
-            self.x_acc = -.5
+            self.x_acc = -.2
+            if self.touche_SPACE == 'PUSH':
+                self.x_acc = -.5
 
         if self.touche_D == 'PUSH':
-            self.x_acc = .5
+            self.x_acc = .2
+            if self.touche_SPACE == 'PUSH':
+                self.x_acc = .5
 
         if self.touche_SPACE == 'PUSH':
             self.y_acc = -0.12
@@ -136,7 +168,7 @@ class Vaisseau():
         if self.position[1] < self.y and self.touche_SPACE == 'RELACHE':  
             self.y_acc = 0.05
 
-        ##Dans la zone y ou pas##
+        ##Dans la zone y est ou pas ?##
         if self.position[1] < self.y + 5 and self.position[1] > self.y - 5:
             self.position_zone = True ## on est dans la zoneY pour stabiliser
         else:
@@ -166,14 +198,23 @@ class Vaisseau():
                 if self.posChargeur == D_CONF_VAISSEAU['nbMissile']:
                     self.posChargeur = 0
 
+    def gestionAnimation(self):
+        if (self.touche_SPACE == 'PUSH'):
+            self.mode1Animation.display(True)
+            self.mode1Animation.rotationDroite(45)
+        else:
+            self.mode1Animation.display(False)
+
+        self.flammeAnimation.runCyclique(self.position)
+        self.mode1Animation.refreshPosition(self.position[0]-45,self.position[1]-42)
+
+
     def main(self):
         if get_Pause() == False:
             self.time = time.time()
-            # print(self.moteur.canvas.find_closest(10,10))
             self.moteur.canvas.move(self.objVaisseau,self.x_speed,self.y_speed)
             self.position = self.moteur.canvas.coords(self.objVaisseau)
-            self.flammeAnimation.runCyclique(self.position)
-            
+            self.gestionAnimation()
             self.physique()
             self.miseAfire()
         

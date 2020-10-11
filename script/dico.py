@@ -35,7 +35,8 @@ D_AUDIO = {
 D_IMAGE = {
     'vaisseau' : Image.open("assets/images/vaisseau.png"),
     'background' : Image.open("assets/images/decor.jpg"),
-    'panda' : Image.open("assets/images/panda.png")
+    'panda' : Image.open("assets/images/panda.png"),
+    'mode1' : Image.open("assets/images/mode1.png")
 }
 
 D_SPRITE_FLAMME = {

@@ -12,6 +12,7 @@ from PIL import ImageFilter
 from .decor import Decor
 from .objVaisseau import Vaisseau
 from .panda import Panda
+from .barreVie import BarreVie
 import random
 import time
 from .dicoDynamique import *
@@ -43,15 +44,24 @@ class Moteur:
     ##Intentiation de tous les objets Tkinter
     def creationObjets(self):
         self.decor = Decor(self)
-        self.vaisseau = Vaisseau(self,200)
         # self.vaisseau2 = Vaisseau(self,100)
         # self.vaisseau3 = Vaisseau(self,300)
-        self.panda = Panda(self,200,300)
-        self.panda2 = Panda(self,500,300)
-        self.panda2 = Panda(self,100,200)
-        self.panda2 = Panda(self,220,30)
-        self.panda2 = Panda(self,600,100)
-        self.panda2 = Panda(self,420,220)
+        self.panda = Panda(self,200,100,[45,45])
+        self.panda2 = Panda(self,500,300,[45,45])
+        self.panda2 = Panda(self,100,200,[45,45])
+        self.panda2 = Panda(self,220,30,[45,45])
+        self.panda2 = Panda(self,480,110,[45,45])
+        self.panda2 = Panda(self,420,220,[45,45])
+        self.panda2 = Panda(self,546,199,[45,45])
+        self.panda2 = Panda(self,545,220,[45,45])
+        self.panda2 = Panda(self,100,175,[45,45])
+        self.panda2 = Panda(self,420,220,[45,45])
+        self.panda2 = Panda(self,22,354,[45,45])
+        self.panda2 = Panda(self,35,220,[55,45])
+
+        self.vaisseau = Vaisseau(self,200)
+        self.barreVie = BarreVie (self,600,30,100)
+
         self.pause = self.canvas.create_text(D_POSITION_INIT,text='PAUSE',fill='white',width='200')
         # D_AUDIO['zik'].play()
 

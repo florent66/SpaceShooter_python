@@ -11,9 +11,9 @@ import time
 ##test premier commit
 
 class Panda:
-    def __init__(self,moteur,x,y):
+    def __init__(self,moteur,x,y,cage):
         self.moteur = moteur
-        self.cage = [30,30]
+        self.cage = cage
         self.x = x
         self.y = y
         self.x_speed = 0
@@ -60,9 +60,8 @@ class Panda:
 
 
     def miseAfire(self):
-        # self.moteur.canvas.coords(self.objPanda,-200, 0)
-        # self.moteur.canvas.delete(self.objPanda)
-        # dicoSon['explosion'].play()
+        self.moteur.canvas.coords(self.objPanda,-200, 0)
+        D_AUDIO['explosion'].play()
         self.moteur.canvas.pack()
         for u in range(0,self.nbExplosion):
             self.explosions[u].fire(self.position[0],self.position[1])
