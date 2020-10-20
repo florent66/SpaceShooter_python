@@ -3,6 +3,7 @@ from PIL import Image
 from PIL import ImageFilter
 import random
 from .explosion import Explosion
+from .pysiqueObjet import Physique
 from .dicoDynamique import *
 from .dico  import *
 import time
@@ -10,9 +11,9 @@ import time
 # from Tkinter import * 
 ##test premier commit
 
-class Panda:
-    def __init__(self,moteur,x,y,cage):
-        self.moteur = moteur
+class Panda(Physique):
+    def __init__(self,x,y,cage):
+        self.moteur = get_Moteur()
         self.cage = cage
         self.x = x
         self.y = y
@@ -70,6 +71,7 @@ class Panda:
 
     def physique(self):
         self.time = time.time()
+        # print(self.p)
         if get_Pause() == False:
             self.position = self.moteur.canvas.coords(self.objPanda)
             self.fireColision()

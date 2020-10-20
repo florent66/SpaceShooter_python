@@ -9,8 +9,8 @@ from .dicoDynamique import *
 
 
 class Vaisseau():
-    def __init__(self,moteur,x):
-        self.moteur = moteur
+    def __init__(self,x):
+        self.moteur = get_Moteur()
 
         ##Initialisation des variables
         self.cage = [45,45]
@@ -74,7 +74,7 @@ class Vaisseau():
         self.imgVaisseau = self.imgVaisseau.rotate(180)
         self.imgVaisseau = self.imgVaisseau.resize((self.cage[0],self.cage[1]))
         self.tkimage = ImageTk.PhotoImage(self.imgVaisseau) 
-        self.objVaisseau = moteur.canvas.create_image(0,0,anchor='nw', image=self.tkimage)
+        self.objVaisseau = self.moteur.canvas.create_image(0,0,anchor='nw', image=self.tkimage)
         self.moteur.canvas.coords(self.objVaisseau,self.x, self.y)
 
 
@@ -217,6 +217,7 @@ class Vaisseau():
             self.gestionAnimation()
             self.physique()
             self.miseAfire()
+            AjoutcolisionVaisseau(self,self.position,self.cage)
         
         self.moteur.fenetre.after(D_CONF_VAISSEAU['timeRefresh'],self.main)
 
