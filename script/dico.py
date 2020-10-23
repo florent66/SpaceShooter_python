@@ -60,7 +60,7 @@ D_CONF_VAISSEAU = {
     'vRecentrageH' : .2,
     'vRecentrageB' : .8,
     'timeDeltaTir' : 0.1,
-    'nbMissile' : 1,
+    'nbMissile' : 10,
     'toucheGauche' : 's',
     'toucheDroite' : 'f',
     'toucheTir' : 'l',

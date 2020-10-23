@@ -50,11 +50,12 @@ def AjoutcolisionMissile(obj,position,cage):
     global colisionMissile
     colisionMissile[obj] = position + cage
     ##Le moteur de colision est appele ici
-    moteurMissilePanda()  
+      
 
 def AjoutcolisionVaisseau(obj,position,cage):
     global colisionVaisseau
     colisionVaisseau[obj] = position + cage
+    moteurMissilePanda()
 ####################################################################################
 
 ## Getter Setter de l 'etat PAUSE

@@ -80,9 +80,9 @@ class Vaisseau():
 
 
         for i in range(0,D_CONF_VAISSEAU['nbMissile']):
-            self.missiles.append(Missile(self,self.moteur))
+            self.missiles.append(Missile())
         self.moteur.canvas.pack()
-        self.main()
+        self.refresh()
 
 
     def clavierPress(self,event):
@@ -209,7 +209,7 @@ class Vaisseau():
         self.mode1Animation.refreshPosition(self.position[0]-45,self.position[1]-42)
 
 
-    def main(self):
+    def refresh(self):
         if get_Pause() == False:
             self.time = time.time()
             self.moteur.canvas.move(self.objVaisseau,self.x_speed,self.y_speed)
@@ -219,5 +219,5 @@ class Vaisseau():
             self.miseAfire()
             AjoutcolisionVaisseau(self,self.position,self.cage)
         
-        self.moteur.fenetre.after(D_CONF_VAISSEAU['timeRefresh'],self.main)
+        self.moteur.fenetre.after(D_CONF_VAISSEAU['timeRefresh'],self.refresh)
 
