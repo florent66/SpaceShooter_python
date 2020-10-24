@@ -17,11 +17,6 @@ class Vaisseau(ObjetPhysique):
         self.cage = [45,45]
         self.x = x
         self.y = 500
-        self.vitesseMax = 6
-        self.x_speed = 0
-        self.y_speed = 0
-        self.x_acc = 0
-        self.y_acc = 0
         self.position_zone = True
         self.touche_G = 'RELACHE'
         self.touche_D = 'RELACHE'
@@ -31,11 +26,6 @@ class Vaisseau(ObjetPhysique):
         self.posChargeur = 0
         self.touchGachete = False
         self.readyGachete = True
-        self.time = 0
-        self.timeFire = 0
-        self.angle = 0
-
-
 
         #############TODO###########################################
         ##Creation la flamme (sprite)
@@ -75,9 +65,9 @@ class Vaisseau(ObjetPhysique):
         self.imgVaisseau = self.imgVaisseau.rotate(180)
         self.imgVaisseau = self.imgVaisseau.resize((self.cage[0],self.cage[1]))
         self.tkimage = ImageTk.PhotoImage(self.imgVaisseau) 
-        self.objVaisseau = self.moteur.canvas.create_image(0,0,anchor='nw', image=self.tkimage)
-        self.moteur.canvas.coords(self.objVaisseau,self.x, self.y)
+        self.obj = self.moteur.canvas.create_image(0,0,anchor='nw', image=self.tkimage)
 
+        ObjetPhysique.__init__(self,self.obj,self.x,self.y,D_CONF_MISSILE['nbEplosion'],"assets/images/explosion.png")
 
 
         for i in range(0,D_CONF_VAISSEAU['nbMissile']):
@@ -210,15 +200,9 @@ class Vaisseau(ObjetPhysique):
         self.mode1Animation.refreshPosition(self.position[0]-45,self.position[1]-42)
 
 
-    def refresh(self):
-        if get_Pause() == False:
-            self.time = time.time()
-            self.moteur.canvas.move(self.objVaisseau,self.x_speed,self.y_speed)
-            self.position = self.moteur.canvas.coords(self.objVaisseau)
-            self.gestionAnimation()
-            self.physique()
-            self.miseAfire()
-            AjoutcolisionVaisseau(self,self.position,self.cage)
+    def refreshObj(self):
+        self.gestionAnimation()
+        self.physique()
+        self.miseAfire()
+        AjoutcolisionVaisseau(self,self.position,self.cage)
         
-        self.moteur.fenetre.after(D_CONF_VAISSEAU['timeRefresh'],self.refresh)
-
