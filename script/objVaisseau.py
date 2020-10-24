@@ -6,9 +6,10 @@ from .missile import Missile
 from .animation import Animation
 from .dico import *
 from .dicoDynamique import *
+from .pysiqueObjet import ObjetPhysique
 
 
-class Vaisseau():
+class Vaisseau(ObjetPhysique):
     def __init__(self,x):
         self.moteur = get_Moteur()
 

@@ -26,8 +26,8 @@ def moteurMissilePanda():
         for objPanda,objPandaVal in colisionPanda.items():
             if objMissileVal[0] < objPandaVal[0] + objPandaVal[2] and objMissileVal[0]+objMissileVal[2] > objPandaVal[0]:
                 if objMissileVal[1] < objPandaVal[1] + objPandaVal[3] and objMissileVal[1]+objMissileVal[3] > objPandaVal[1]:
-                    objMissile.miseAfire()
-                    objPanda.miseAfire()
+                    objMissile.startExplosion()
+                    objPanda.startExplosion()
                     
 
     ##Traitement entre vaisseau et panda
