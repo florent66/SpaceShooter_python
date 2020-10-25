@@ -1,5 +1,5 @@
-from .dicoDynamique import *
-from .dico import *
+from .dictionnaires.dicoDynamique import *
+from .dictionnaires.dico import *
 import time
 
 class Base:
@@ -25,9 +25,9 @@ class Base:
     def refresh(self):
         if get_Pause() == False:
             self.time = time.time()
-            self.position = self.moteur.canvas.coords(self.obj)
-            self.fireColision()
             self.moteur.canvas.move(self.obj,self.x_speed,self.y_speed)
+            self.position = self.moteur.canvas.coords(self.obj)
+            self.colision()
             self.refreshObj()
         self.moteur.fenetre.after(20,self.refresh)
 
@@ -35,5 +35,5 @@ class Base:
     def refreshObj(self):
         pass
 
-    def fireColision(self):
+    def colision(self):
         pass

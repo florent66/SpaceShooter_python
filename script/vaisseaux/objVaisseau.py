@@ -2,19 +2,20 @@ from PIL import ImageTk
 import random
 import time
 
-from .missile import Missile
-from .animation import Animation
-from .dico import *
-from .dicoDynamique import *
-from .pysiqueObjet import ObjetPhysique
+from ..projectiles.missile import Missile
+from ..effects.animation import Animation
+from ..dictionnaires.dico import *
+from ..dictionnaires.dicoDynamique import *
+from ..base import Base
+from ..pysiqueObjet import ObjetPhysique
 
 
-class Vaisseau(ObjetPhysique):
+class Vaisseau(Base,ObjetPhysique):
     def __init__(self,x):
         self.moteur = get_Moteur()
 
         ##Initialisation des variables
-        self.cage = [45,45]
+        self.cage = D_CONF_VAISSEAU['cage']
         self.x = x
         self.y = 500
         self.position_zone = True
@@ -22,17 +23,18 @@ class Vaisseau(ObjetPhysique):
         self.touche_D = 'RELACHE'
         self.touche_SPACE = 'RELACHE'
         self.position = [0,0]
-        self.missiles = []
+        self.missiles = D_CONF_VAISSEAU['missiles']
         self.posChargeur = 0
         self.touchGachete = False
         self.readyGachete = True
+        self.modelMissile = D_CONF_VAISSEAU['modelMissile']
 
         #############TODO###########################################
         ##Creation la flamme (sprite)
         self.spriteFlamme = []
         #self.moteur.canvas.create_rectangle(self.x, self.y, self.x+self.cage[0], self.y+self.cage[1],fill='red')
         for i in range(1,4):
-            self.imgFlammeOrigine = D_SPRITE_FLAMME[str(i)]
+            self.imgFlammeOrigine = D_CONF_VAISSEAU['D_SPRITE_FLAMME'][str(i)]
             self.imgFlamme = self.imgFlammeOrigine.resize((20,self.cage[1]))
             self.tkimageFlamme = ImageTk.PhotoImage(self.imgFlamme)
             self.spriteFlamme.append(self.tkimageFlamme)
@@ -48,10 +50,10 @@ class Vaisseau(ObjetPhysique):
         # self.moteur.canvas.coords(self.objimgMode1,self.x, self.y)
 
         #############TODO###########################################
-        ##Creation mode1 (sprite)
+        ##Creation mode1 (sprite) on tourne à 360
         self.spriteMode1 = []
         for i in range(0,360):
-            self.imgmode1Origine = D_IMAGE['mode1']
+            self.imgmode1Origine = D_CONF_VAISSEAU['imgModeSpeed']
             self.imgmode1 = self.imgmode1Origine.resize((self.cage[0]*3,self.cage[1]*3))
             self.imgmode1 = self.imgmode1.rotate(i)
             self.tkimage = ImageTk.PhotoImage(self.imgmode1)
@@ -61,20 +63,24 @@ class Vaisseau(ObjetPhysique):
         
         #########################################################
         ##Creation vaisseau
-        self.imgVaisseau = D_IMAGE['vaisseau'] 
+        self.imgVaisseau = D_CONF_VAISSEAU['image']
         self.imgVaisseau = self.imgVaisseau.rotate(180)
         self.imgVaisseau = self.imgVaisseau.resize((self.cage[0],self.cage[1]))
         self.tkimage = ImageTk.PhotoImage(self.imgVaisseau) 
         self.obj = self.moteur.canvas.create_image(0,0,anchor='nw', image=self.tkimage)
 
-        ObjetPhysique.__init__(self,self.obj,self.x,self.y,D_CONF_MISSILE['nbEplosion'],"assets/images/explosion.png")
+        Base.__init__(self,self.obj,self.x,self.y)
+        ObjetPhysique.__init__(self,D_CONF_VAISSEAU)
 
+        self.loadMissile()
 
-        for i in range(0,D_CONF_VAISSEAU['nbMissile']):
-            self.missiles.append(Missile())
         self.moteur.canvas.pack()
         self.refresh()
 
+    def loadMissile(self):
+            for i in range(0,D_CONF_VAISSEAU['nbMissile']):
+                self.missiles['basic'].append(Missile(D_OBJ_MISSILE_1))
+                self.missiles['best'].append(Missile(D_OBJ_MISSILE_2))
 
     def clavierPress(self,event):
         self.touche = event.keysym
@@ -178,12 +184,18 @@ class Vaisseau(ObjetPhysique):
 
     def miseAfire(self):
         deltaTime = self.time - self.timeFire 
-        if self.touchGachete and deltaTime > D_CONF_VAISSEAU['timeDeltaTir']:
-            if self.missiles[self.posChargeur].fireMove == False and self.missiles[self.posChargeur].fireOut == False:
+        try:
+            objMissile = self.missiles[self.modelMissile][self.posChargeur]
+        except:
+            pass
+        
+        if self.touchGachete and deltaTime > objMissile.D_OBJ_MISSILE_X['deltaTir']:  
+            if objMissile.fireMove == False and objMissile.fireOut == False:
                 # D_AUDIO['tir'].play()
+                correctionPosMissile = (self.cage[0] - objMissile.D_OBJ_MISSILE_X['cage'][0])/2
                 self.y_speed = self.y_speed + 0.2
                 self.y_acc = .8
-                self.missiles[self.posChargeur].fire(self.position[0]+12,self.position[1])
+                objMissile.fire(self.position[0]+correctionPosMissile,self.position[1])
                 self.timeFire = time.time()
                 self.posChargeur = self.posChargeur+1
                 if self.posChargeur == D_CONF_VAISSEAU['nbMissile']:

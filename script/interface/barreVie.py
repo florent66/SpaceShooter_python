@@ -1,6 +1,6 @@
 from PIL import ImageTk
-from .dico import *
-from .dicoDynamique import *
+from ..dictionnaires.dico import *
+from ..dictionnaires.dicoDynamique import *
 
 
 class BarreVie():

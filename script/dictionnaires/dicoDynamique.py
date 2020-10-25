@@ -15,7 +15,7 @@ Moteur = 'rien'
 ####################################################################################
 ##Fonction qui analyse les collision entre les objets Missile/Panda
 ##Si collision on appel la methode miseAfire() des objects
-def moteurMissilePanda():
+def moteurColision():
     # global colisionMissile
     # global colisionPanda
 
@@ -34,11 +34,14 @@ def moteurMissilePanda():
     for cle,valeur in colisionPanda.items():
         objMissile = cle
         objMissileVal = valeur
-        for objPanda,objPandaVal in colisionVaisseau.items():
-            if objMissileVal[0] < objPandaVal[0] + objPandaVal[2] and objMissileVal[0]+objMissileVal[2] > objPandaVal[0]:
-                if objMissileVal[1] < objPandaVal[1] + objPandaVal[3] and objMissileVal[1]+objMissileVal[3] > objPandaVal[1]:
+        for objVaisseau,objVaisseauVal in colisionVaisseau.items():
+            if objMissileVal[0] < objVaisseauVal[0] + objVaisseauVal[2] and objMissileVal[0]+objMissileVal[2] > objVaisseauVal[0]:
+                if objMissileVal[1] < objVaisseauVal[1] + objVaisseauVal[3] and objMissileVal[1]+objMissileVal[3] > objVaisseauVal[1]:
                     Moteur.barreVie.baisse(0.1)
                     Moteur.barreVie.changeCouleur('green')
+                    objMissile.startExplosion()
+                    objVaisseau.modelMissile = 'basic'
+                    
 
 
 
@@ -55,7 +58,7 @@ def AjoutcolisionMissile(obj,position,cage):
 def AjoutcolisionVaisseau(obj,position,cage):
     global colisionVaisseau
     colisionVaisseau[obj] = position + cage
-    moteurMissilePanda()
+    moteurColision()
 ####################################################################################
 
 ## Getter Setter de l 'etat PAUSE

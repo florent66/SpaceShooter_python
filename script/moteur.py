@@ -5,17 +5,17 @@
 
 import sys
 from tkinter import * 
+import random
+import time
 from PIL import ImageTk 
 from PIL import Image 
 from PIL import ImageFilter
-from .decor import Decor
-from .objVaisseau import Vaisseau
-from .panda import Panda
-from .barreVie import BarreVie
-import random
-import time
-from .dicoDynamique import *
-from .dico import * ##D_
+from .decors.decor import Decor
+from .vaisseaux.objVaisseau import Vaisseau
+from .ennemis.panda import Panda
+from .interface.barreVie import BarreVie
+from .dictionnaires.dicoDynamique import *
+from .dictionnaires.dico import * ##D_
 
 
 class Moteur:

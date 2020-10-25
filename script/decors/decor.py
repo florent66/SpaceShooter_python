@@ -2,9 +2,9 @@ from PIL import ImageTk
 from PIL import Image 
 from PIL import ImageFilter
 import random
-from .explosion import Explosion
-from .dico import *
-from .dicoDynamique import *
+# from ..effects.explosion import Explosion
+from ..dictionnaires.dico import *
+from ..dictionnaires.dicoDynamique import *
 import time
 ##test premier commit
 
