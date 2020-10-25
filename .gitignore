@@ -1,2 +1,4 @@
 *.pyc
+script/*.pyc
+script/__pycache__
 __pycache__
