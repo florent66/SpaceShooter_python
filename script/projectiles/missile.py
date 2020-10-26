@@ -4,12 +4,12 @@ from PIL import ImageFilter
 import random
 
 from ..base import Base
-from ..pysiqueObjet import ObjetPhysique
+from ..explosionPhysique import ExplosionPhysique
 from ..dictionnaires.dicoDynamique import *
 from ..dictionnaires.dico import *
 
 
-class Missile(Base,ObjetPhysique):
+class Missile(Base,ExplosionPhysique):
     def __init__(self,D_OBJ_MISSILE_X):
         global nbExplosion
         self.moteur = get_Moteur()
@@ -22,7 +22,7 @@ class Missile(Base,ObjetPhysique):
         self.obj = self.moteur.canvas.create_image(0,0,anchor='nw', image=self.tkimage)
         # self.moteur.canvas.create_rectangle(self.x-50, self.y-50, self.x+50, self.y+50,fill='red')
         Base.__init__(self,self.obj,-100,550)
-        ObjetPhysique.__init__(self,self.D_OBJ_MISSILE_X)
+        ExplosionPhysique.__init__(self,self.D_OBJ_MISSILE_X)
      
 
     def fire(self,x,y) :

@@ -7,22 +7,19 @@ from ..effects.animation import Animation
 from ..dictionnaires.dico import *
 from ..dictionnaires.dicoDynamique import *
 from ..base import Base
-from ..pysiqueObjet import ObjetPhysique
+from ..explosionPhysique import ExplosionPhysique
 
 
-class Vaisseau(Base,ObjetPhysique):
+class Vaisseau(Base,ExplosionPhysique):
     def __init__(self,x):
         self.moteur = get_Moteur()
 
         ##Initialisation des variables
         self.cage = D_CONF_VAISSEAU['cage']
-        self.x = x
-        self.y = 500
         self.position_zone = True
         self.touche_G = 'RELACHE'
         self.touche_D = 'RELACHE'
         self.touche_SPACE = 'RELACHE'
-        self.position = [0,0]
         self.missiles = D_CONF_VAISSEAU['missiles']
         self.posChargeur = 0
         self.touchGachete = False
@@ -69,13 +66,12 @@ class Vaisseau(Base,ObjetPhysique):
         self.tkimage = ImageTk.PhotoImage(self.imgVaisseau) 
         self.obj = self.moteur.canvas.create_image(0,0,anchor='nw', image=self.tkimage)
 
-        Base.__init__(self,self.obj,self.x,self.y)
-        ObjetPhysique.__init__(self,D_CONF_VAISSEAU)
-
         self.loadMissile()
 
-        self.moteur.canvas.pack()
-        self.refresh()
+        Base.__init__(self,self.obj,x,500)
+        ExplosionPhysique.__init__(self,D_CONF_VAISSEAU)
+
+        self.refresh() #on double le refresh
 
     def loadMissile(self):
             for i in range(0,D_CONF_VAISSEAU['nbMissile']):

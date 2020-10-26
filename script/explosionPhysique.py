@@ -7,7 +7,7 @@ from .dictionnaires.dico import *
 from .dictionnaires.dicoDynamique import *
 from .base import Base
 
-class ObjetPhysique():
+class ExplosionPhysique():
     def __init__(self,D_CONF_X):
         self.nbExplosion = D_CONF_X['nbExplosion']
         self.imgExplosion = D_CONF_X['imgExplosion']

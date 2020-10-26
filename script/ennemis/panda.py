@@ -3,7 +3,7 @@ from PIL import Image
 from PIL import ImageFilter
 import random
 from ..base import Base
-from ..pysiqueObjet import ObjetPhysique
+from ..explosionPhysique import ExplosionPhysique
 from ..dictionnaires.dicoDynamique import *
 from ..dictionnaires.dico  import *
 
@@ -11,7 +11,7 @@ from ..dictionnaires.dico  import *
 # from Tkinter import * 
 ##test premier commit
 
-class Panda(Base,ObjetPhysique):
+class Panda(Base,ExplosionPhysique):
     def __init__(self,x,y,cage):
         self.moteur = get_Moteur()
         self.cage = cage
@@ -30,7 +30,7 @@ class Panda(Base,ObjetPhysique):
      
         #self.moteur.canvas.itemconfigure(self.obj, state="hidden") #pour agir sur les options ici idden ou "normal"
         Base.__init__(self,self.obj,x,y)
-        ObjetPhysique.__init__(self,D_CONF_PANDA)
+        ExplosionPhysique.__init__(self,D_CONF_PANDA)
 
     def colision(self):
         AjoutcolisionPanda(self,self.position,self.cage)
