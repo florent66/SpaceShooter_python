@@ -19,14 +19,26 @@ class ExplosionPhysique():
 
 
     def startExplosion(self):
-        self.fireMove = False
-        self.y_speed = 0
-        self.x_speed = 0
-        self.moteur.canvas.coords(self.obj,self.x, self.y)
-        D_AUDIO['explosion'].play()
-        # self.moteur.canvas.delete("all") 
-        for u in range(0,self.nbExplosion):
-            self.explosions[u].fire(self.position[0],self.position[1]) 
+
+        # self.moteur.canvas.delete("all")
+        self.vie = self.vie - 2
+        if (self.vie <= 0):
+            self.vie = self.D_OBJ_X['vie']
+            self.fireMove = False
+            self.y_speed = 0
+            self.x_speed = 0
+
+            ##Si explosion on passe à l 'animation de l 'entité suivante voir conf ..
+            ##Si il n'y a plus d 'animation c 'est le repos
+            if (self.lenAnimation  > self.indexAnimation):
+                 self.indexAnimation += 1
+                 self.moteur.canvas.coords(self.obj,self.numAnimation[str(self.indexAnimation)][0], self.numAnimation[str(self.indexAnimation)][1])
+            else:
+                self.moteur.canvas.coords(self.obj,self.numAnimation['repos'][0], self.numAnimation['repos'][1])
+
+            D_AUDIO['explosion'].play()
+            for u in range(0,self.nbExplosion):
+                self.explosions[u].fire(self.position[0],self.position[1]) 
 
     def blessure(self):
         self.fireMove = False
@@ -48,7 +60,7 @@ class Explosion(Base):
         self.imgExplosion = self.imgExplosion.resize((int(random.uniform(2,10)),int(random.uniform(2,10))))
         self.tkimage = ImageTk.PhotoImage(self.imgExplosion) 
         self.obj= self.moteur.canvas.create_image(0,0,anchor='nw', image=self.tkimage)
-        Base.__init__(self,self.obj,self.x,self.y)
+        Base.__init__(self,self.obj,self.x,self.y,D_OBJ_EXPLOSION)
         self.moteur.canvas.pack()
     
 

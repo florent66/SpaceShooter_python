@@ -76,7 +76,7 @@ def get_Moteur():
     return Moteur
 
 def set_Moteur(moteur):
-    print('setmoteur')
+    print('gooo !!!!!')
     global Moteur
     Moteur = moteur
 

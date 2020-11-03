@@ -68,7 +68,7 @@ class Vaisseau(Base,ExplosionPhysique):
 
         self.loadMissile()
 
-        Base.__init__(self,self.obj,x,500)
+        Base.__init__(self,self.obj,x,500,D_CONF_VAISSEAU)
         ExplosionPhysique.__init__(self,D_CONF_VAISSEAU)
 
         self.refresh() #on double le refresh

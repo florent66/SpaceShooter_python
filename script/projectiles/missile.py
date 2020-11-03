@@ -21,7 +21,7 @@ class Missile(Base,ExplosionPhysique):
         self.tkimage = ImageTk.PhotoImage(self.imgMissile) 
         self.obj = self.moteur.canvas.create_image(0,0,anchor='nw', image=self.tkimage)
         # self.moteur.canvas.create_rectangle(self.x-50, self.y-50, self.x+50, self.y+50,fill='red')
-        Base.__init__(self,self.obj,-100,550)
+        Base.__init__(self,self.obj,-100,550,self.D_OBJ_MISSILE_X)
         ExplosionPhysique.__init__(self,self.D_OBJ_MISSILE_X)
      
 

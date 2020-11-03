@@ -28,15 +28,15 @@ class Moteur:
         self.canvas = Canvas(self.fenetre, width=D_SIZE_CANVAS['largeur'], height=D_SIZE_CANVAS['hauteur'], background='black')
         self.ImageTk = ImageTk
         self.canvas.focus_set()
-        
-
+        self.test ='florent'
+        self.vaisseau = ''
         ##Generation des objets tKinter
         self.creationObjets()
 
         ##Ecouteurs clavier press et relache
         self.canvas.bind("<Key>", self.clavierPress)
         self.canvas.bind("<KeyRelease>", self.clavierRelache)
-    
+        
         self.fenetre.mainloop()
         ## On ne peux plus rien faire au dela Tout est defini dans la construction
         ##########################################################################
@@ -88,6 +88,11 @@ class Moteur:
 
     def alert(self):
         print('alert')
+
+    def gestionScenario():
+
+        self.moteur.fenetre.after(1000,self.gestionScenario)
+        
 
 
 
